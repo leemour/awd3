@@ -1,0 +1,14 @@
+%nav.navbar
+  .navbar-inner
+    .container
+
+      %a.btn.btn-navbar{'data-target' => ".nav-collapse", 'data-toggle' => "collapse", :type => "button"}
+        - 3.times do
+          %span.icon-bar
+
+      .nav-collapse.collapse
+        %ul.nav
+          %li
+            = link_to 'Главная', root_path, class: 'brand'
+          %li
+            =link_to 'Страницы', pages_path

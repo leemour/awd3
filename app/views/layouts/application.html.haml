@@ -1,0 +1,41 @@
+!!! 5
+%html{:lang => 'ru'}
+  %head
+    %meta{:charset => 'utf-8'}
+    %meta{:name => :viewport, :content => 'width=device-width,initial-scale=1'}
+    %meta{ name: 'description', content: (defined? @page.description ? @page.description : '') }/
+    %meta{ name: 'keywords', content: (defined? @page.keywords ? @page.keywords : '') }/
+    %title= full_title(defined? @page.title ? @page.title : '')
+    = favicon_link_tag 'favicon.ico'
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application", "data-turbolinks-track" => true
+    = csrf_meta_tags
+    = yield(:head)
+    /[if lt IE 9]
+      %script{ :src => '//html5shiv.googlecode.com/svn/trunk/html5.js' }
+
+%body{:class => "#{controller_name} #{action_name}"}
+  %header
+    .conatiner-fluid
+      .row-fluid
+        = render 'layouts/navigation'
+
+  %main#content{:role => "main"}
+    .conatiner-fluid
+      .row-fluid
+        .span12
+          = render 'layouts/messages'
+
+      .row-fluid
+        %div.main.span8
+
+          = yield
+
+
+        %aside.secondary.span4#sidebar
+          = render 'layouts/sidebar'
+
+  %footer
+    .container-fluid
+      .row-fuild
+        = render 'layouts/footer'
