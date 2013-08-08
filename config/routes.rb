@@ -1,11 +1,11 @@
 Awd3::Application.routes.draw do
-  resources :products
 
+  resources :products
 
   get "say/hello"
   get "say/goodbye"
 
-  root to: 'say#hello'
+  root to: "store#index", as: 'store'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

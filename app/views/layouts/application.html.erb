@@ -6,9 +6,29 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
+<body class="<%= "#{controller_name} #{action_name}" %>">
 
-<%= yield %>
+<div id="banner">
+  <%= image_tag('logo.png') %>
+  <%= @page_title || 'Pragmatic Bookshelf' %>
+</div>
 
+<div id="columns">
+  <div id="sidebar">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/faq">Questions</a></li>
+      <li><a href="/news">News</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+    <div class="time">
+      <%= Time.now.strftime "%d.%m.%Y %H:%M" %>
+    </div>
+  </div>
+
+  <div id="main">
+    <%= yield %>
+  </div>
+</div>
 </body>
 </html>
