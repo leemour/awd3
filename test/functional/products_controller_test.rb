@@ -52,4 +52,13 @@ class ProductsControllerTest < ActionController::TestCase
 
     assert_redirected_to products_path
   end
+
+  test "should get products" do
+    get :index
+    assert_response :success
+    assert_select "#columns #sidebar a", minimum: 4
+    assert_select 'h1', 'Listing products'
+    assert_select 'td dt', 'Programming Ruby 1.9'
+    assert_select '#main > a', 'New Product'
+  end
 end
