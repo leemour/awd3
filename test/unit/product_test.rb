@@ -1,6 +1,23 @@
 require 'test_helper'
 
 class ProductTest < ActiveSupport::TestCase
+  fixtures :products
+
+  def new_product(image_url)
+    Product.new(title:   'My Book Title',
+                description: 'yyy',
+                price:      1,
+                image_url: image_url)
+  end
+  #(?:.*): /f
+  #.*: /f
+  # *[\w\.\(]*\w*: /f
+  #(?: *[\w\.\(])*\w+: */l0r0l1f
+  # *(?:[\w\.]*\()\w*: /f
+  #(?:[\s\w\.\(]*)\w+: */l0r0l0f1
+  #[\s\w\.\(]*(?:\w+:) *./l0r0l0f1
+  #(?:[\s\w\.\(]*\w+:) *./l0r0l0f1
+
   test 'product attributes must not be empty' do
     product = Product.new
     assert product.invalid?
@@ -11,9 +28,9 @@ class ProductTest < ActiveSupport::TestCase
   end
 
   test 'product price must be positive' do
-    product = Product.new(title: 'My Book Title',
+    product = Product.new(title:       'My Book Title',
                           description: 'yyy',
-                          image_url: 'zzz.jpg')
+                          image_url:   'zzz.jpg')
     product.price = -1
     assert product.invalid?
     assert_equal 'must be greater than or equal to 0.001',
@@ -26,5 +43,26 @@ class ProductTest < ActiveSupport::TestCase
 
     product.price = 1
     assert product.valid?
+  end
+
+  test 'image_url' do
+    ok = %w{ fred.gif fred.jpg fred.png FRED.JPG http://mail.ru/f/fred.gif }
+    bad = %w{ fred.doc fred.gif/more fred.gif.more }
+    ok.each do |name|
+      assert new_product(name).valid?, "#{name} shouldn't be valid"
+    end
+    bad.each do |name|
+      assert new_product(name).invalid?, "#{name} shouldn't be valid"
+    end
+  end
+
+  test 'product is not valid without unique title - I18n' do
+    product = Product.new(title:       products(:ruby).title,
+                          description: 'yyy',
+                          price:       1,
+                          image_url:   'zzz.jpg')
+    assert !product.save
+    assert_equal I18n.translate('activerecord.errors.messages.taken'),
+                 product.errors[:title].join('; ')
   end
 end
