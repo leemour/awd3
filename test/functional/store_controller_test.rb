@@ -9,5 +9,8 @@ class StoreControllerTest < ActionController::TestCase
     assert_select 'h3', 'Programming Ruby 1.9'
     assert_select '.price', /&pound;[,\d]+\.\d\d/
     assert_select 'h1', 'Your Pragmatic Catalog'
+    assert_select "#sidebar a" do
+      assert_select "[href=?]", /.+/  # Not empty
+    end
   end
 end
