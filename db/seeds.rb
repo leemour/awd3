@@ -6,6 +6,8 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 Product.delete_all
+Cart.delete_all
+LineItem.delete_all
 Product.create(
   title: 'Programming Ruby 1.9',
   description:
@@ -16,3 +18,14 @@ Product.create(
     </p>},
   image_url: 'ruby.jpg',
   price: 49.95)
+
+Product.create(
+  title: 'CoffeeScript',
+  description:
+    %{<p>
+      CoffeeScript is JavaScript done right. It provides all of JavaScript's
+      functionality wrapped in a cleaner, more succinct syntax. In the
+      first book on this exciting new language.
+    </p>},
+  image_url: 'coffee.jpg',
+  price: 34.95)
